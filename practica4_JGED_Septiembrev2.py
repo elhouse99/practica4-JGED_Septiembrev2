@@ -6,6 +6,7 @@ Ventana.geometry("350x500")
 Ventana.config(bg="pink")
 Ventana.title("Actividad 04 - Formulario de registro Vr.001")
 
+
 # Definición de funciones
 def LimpiarFormulario():
     tbNombre.delete(0, tk.END)
@@ -14,39 +15,36 @@ def LimpiarFormulario():
     tbEstatura.delete(0, tk.END)
     tbTelefono.delete(0, tk.END)
     varGenero.set(0)
+    messagebox.showinfo("Información", "Los campos se han limpiado correctamente.")
 
-def BorrarFun():
-    LimpiarFormulario()
 
 def GuardarRegistro():
-    nombres = tbNombre.get()
-    apellidos = tbApellidos.get()
-    edad = tbEdad.get()
-    estatura = tbEstatura.get()
-    telefono = tbTelefono.get()
+    nombres = tbNombre.get().strip()
+    apellidos = tbApellidos.get().strip()
+    edad = tbEdad.get().strip()
+    estatura = tbEstatura.get().strip()
+    telefono = tbTelefono.get().strip()
     genero = ""
+
     if varGenero.get() == 1:
         genero = "Hombre"
     elif varGenero.get() == 2:
         genero = "Mujer"
     elif varGenero.get() == 3:
         genero = "Otro"
-    
-    # Generar la cadena de caracteres para la impresión en archivo
-    datos = "Nombres: " + nombres + "\n" + "Apellidos: " + apellidos + "\n" + "Edad: " + edad + "\n" + "Estatura: " + estatura + "\n" + "Telefono: " + telefono + "\n" + "Genero: " + genero + "\n"
-    
-    # Guardar registros
-    with open("registro.txt", "a") as archivo:
-        archivo.write(datos + "\n\n")
-        
-    # Mostrar mensaje de confirmación
-    messagebox.showinfo("Información", "Datos guardados con éxito: \n\n" + datos)
-    tbNombre.delete(0, tk.END)
-    tbApellidos.delete(0, tk.END)
-    tbEdad.delete(0, tk.END)
-    tbEstatura.delete(0, tk.END)
-    tbTelefono.delete(0, tk.END)
-    varGenero.set(0)
+
+    datos = f"Nombres: {nombres}\nApellidos: {apellidos}\nEdad: {edad}\nEstatura: {estatura}\nTelefono: {telefono}\nGenero: {genero}\n"
+
+    try:
+        with open("registro.txt", "a", encoding="utf-8") as archivo:
+            archivo.write(datos + "\n")
+
+        messagebox.showinfo("Información", "Datos guardados con éxito:\n\n" + datos)
+        LimpiarFormulario()
+
+    except Exception as ex:
+        messagebox.showerror("Error", f"Ocurrió un error al guardar el archivo: {ex}")
+
 
 varGenero = tk.IntVar()
 
