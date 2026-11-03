@@ -1,0 +1,8 @@
+Nombres: kiki
+Apellidos: kikik
+Edad: 14
+Estatura: 1.90
+Telefono: 1234567890
+Genero: Hombre
+
+
